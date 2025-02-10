@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=], initial-scale=1.0">
+    <title>View Request</title>
+</head>
+<body>
+    <table cellpadding="10">
+        <tr>
+            <td>#</td>
+            <td>Content</td>
+            <td>Date</td>
+            <td>Category</td>
+            <td>User</td>
+            <td>Ward</td>
+            <td>Status</td>
+        </tr>
+        {% for i in request %}
+        <tr>
+            <td>{{forloop.counter}}</td>
+            <td>{{i.request_content}}</td>
+            <td>{{i.request_date}}</td>
+            <td>{{i.category.category_name}}</td>
+            <td>{{i.user.user_name}}</td>
+            <td>{{i.user.ward.ward_name}}</td>
+            <td>
+                {% if i.request_status == 1 %}
+                Request Accepted
+                {% elif i.request_status == 2 %}
+                Waste Collected
+                {% else %}
+                <a href="{% url 'Admin:acceptrequest' i.id %}">Accept</a>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <table>
+        <tr>
+            <td>#</td>
+            <td>Title</td>
+            <td>Content</td>
+            <td>User</td>
+            <td>Reply</td>
+        </tr>
+        {% for i in complaint %}
+        <tr>
+            <td>{{forloop.counter}}</td>
+            <td>{{i.complaint_title}}</td>
+            <td>{{i.complaint_content}}</td>
+            <td>{{i.user.user_name}}</td>
+            <td>{{i.complaint_reply}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

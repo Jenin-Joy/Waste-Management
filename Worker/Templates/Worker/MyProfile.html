@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <table>
+        <tr>
+            <td>Name</td>
+            <td>{{worker.worker_name}}</td>
+        </tr>
+        <tr>
+            <td>Contact</td>
+            <td>{{worker.worker_contact}}</td>
+        </tr>
+        <tr>
+            <td>Email</td>
+            <td>{{worker.worker_email}}</td>
+        </tr>
+        <tr>
+            <td><a href="{% url 'Worker:editprofile' %}">Edit Profile</a></td>
+            <td><a href="{% url 'Worker:changepassword' %}">Change Password</a></td>
+        </tr>
+    </table>
+    {% if msg %}
+    <script>
+        alert('{{ msg }}');
+        window.location = "{% url 'Worker:profile' %}"
+    </script>
+    {% endif %}
+</body>
+</html>

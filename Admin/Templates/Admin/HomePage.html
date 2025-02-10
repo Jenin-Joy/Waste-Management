@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    Welcome Admin <br>
+    <a href="{% url 'Admin:worker' %}">Add Worker</a><br>
+    <a href="{% url 'Admin:category' %}">Add Category</a><br>
+    <a href="{% url 'Admin:day' %}">Add Day</a><br>
+    <a href="{% url 'Admin:ward' %}">Add Ward</a><br>
+    <a href="{% url 'Admin:viewcomplaint' %}">View Complaint</a><br>
+    <a href="{% url 'Admin:replyedcomplaint' %}">View Replyed Complaint</a><br>
+    <a href="{% url 'Admin:viewuser' %}">View User</a><br>
+    <a href="{% url 'Admin:viewrequest' %}">View Request</a><br>
+    <a href="{% url 'Admin:schedule' %}">Schedule</a><br>
+</body>
+</html>

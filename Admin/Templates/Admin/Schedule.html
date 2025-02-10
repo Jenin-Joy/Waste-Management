@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schedule</title>
+</head>
+<body>
+    <form action="" method="post">
+        {% csrf_token %}
+        <table>
+            <tr>
+                <td>Day</td>
+                <td>
+                    <select name="sel_day" id="">
+                        <option value="">...Select...</option>
+                        {% for i in day %}
+                        <option value="{{i.id}}">{{i.day_name}}</option>
+                        {% endfor %}
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Ward</td>
+                <td>
+                    <select name="sel_ward" id="">
+                        <option value="">...Select...</option>
+                        {% for i in ward %}
+                        <option value="{{i.id}}">{{i.ward_name}}</option>
+                        {% endfor %}
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td><input type="submit" value="Add"></td>
+            </tr>
+        </table>
+    </form>
+    <!-- <table>
+        <tr>
+            <td>#</td>
+            <td>Day</td>
+            <td>Ward</td>
+            <td>Action</td>
+        </tr>
+        {% for i in schedule %}
+        <tr>
+            <td>{{forloop.counter}}</td>
+            <td>{{i.day.day_name}}</td>
+            <td>{{i.ward.ward_name}}</td>
+            <td></td>
+        </tr>
+        {% endfor %}
+    </table> -->
+
+    {% for i in day %}
+    <li>
+        {{i.day_name}}
+        <ul>
+            {% for w in i.wards %}
+            <li>Ward {{w.ward.ward_name}} <a href="{% url 'Admin:deleteschedule' w.id %}">Delete</a></li>
+            {% endfor %}
+        </ul>
+    </li>
+    {% endfor %}
+</body>
+</html>

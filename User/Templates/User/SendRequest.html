@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Send Request</title>
+</head>
+<body>
+    <form action="" method="post">
+        {% csrf_token %}
+        <table>
+            <tr>
+                <td>Category</td>
+                <td>
+                    <select name="sel_category" id="">
+                        <option value="">...Select...</option>
+                        {% for i in category %}
+                        <option value="{{i.id}}">{{i.category_name}}</option>
+                        {% endfor %}
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Content</td>
+                <td><textarea name="txt_content" id="" cols="20" rows="5"></textarea></td>
+            </tr>
+            <tr>
+                <td><input type="submit" value="Send"></td>
+            </tr>
+        </table>
+    </form>
+    <table cellpadding="10">
+        <tr>
+            <td>#</td>
+            <td>Content</td>
+            <td>Date</td>
+            <td>Category</td>
+            <td>Status</td>
+        </tr>
+        {% for i in request %}
+        <tr>
+            <td>{{forloop.counter}}</td>
+            <td>{{i.request_content}}</td>
+            <td>{{i.request_date}}</td>
+            <td>{{i.category.category_name}}</td>
+            <td>
+                {% if i.request_status == 1 %}
+                Request Accepted
+                {% elif i.request_status == 2 %}
+                Waste Collected
+                {% else %}
+                Request Pending
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% if msg %}
+    <script>
+        alert("{{msg}}")
+        window.location = "{% url 'User:sendrequest' %}"
+    </script>
+    {% endif %}
+</body>
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <table>
+        <tr>
+            <td>#</td>
+            <td>User</td>
+            <td>Contact</td>
+            <td>Email</td>
+            <td>Address</td>
+            <td>House Number</td>
+            <td>Photo</td>
+            <td>Ward</td>
+        </tr>
+        {% for i in user %}
+        <tr>
+            <td>{{forloop.counter}}</td>
+            <td>{{i.user_name}}</td>
+            <td>{{i.user_contact}}</td>
+            <td>{{i.user_email}}</td>
+            <td>{{i.user_address}}</td>
+            <td>{{i.user_house_number}}</td>
+            <td><img src="{{i.user_photo.url}}" width="150" alt=""></td>
+            <td>{{i.ward.ward_name}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
