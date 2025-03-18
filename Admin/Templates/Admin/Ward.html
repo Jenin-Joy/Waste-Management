@@ -1,3 +1,5 @@
+{% extends 'Admin/Head.html' %}
+{% block content %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,20 +8,22 @@
     <title>Ward</title>
 </head>
 <body>
+    <div class="col-sm-12 col-xl-6">
+        <div class="bg-light rounded h-100 p-4">
     <form action="" method="post">
         {% csrf_token %}
-        <table>
+        <table class="table">
             <tr>
                 <td>Ward</td>
-                <td><input type="text" name="txt_name" id="" value="{{editward.ward_name}}"></td>
+                <td><input type="text" name="txt_name" class="form-control" id="" value="{{editward.ward_name}}"></td>
             </tr>
             <tr>
-                <td><input type="submit" value="Add"></td>
+                <td colspan="2" align="center"><input type="submit" class="btn btn-primary" value="Add"></td>
             </tr>
         </table>
     </form>
-
-    <table>
+</div></div>
+    <table class="table table-striped">
         <tr>
             <td>#</td>
             <td>Ward</td>
@@ -35,3 +39,4 @@
     </table>
 </body>
 </html>
+{% endblock content %}

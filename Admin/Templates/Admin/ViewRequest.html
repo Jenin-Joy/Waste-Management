@@ -1,3 +1,5 @@
+{% extends 'Admin/Head.html' %}
+{% block content %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,7 +8,7 @@
     <title>View Request</title>
 </head>
 <body>
-    <table cellpadding="10">
+    <table cellpadding="10" class="table table-striped">
         <tr>
             <td>#</td>
             <td>Content</td>
@@ -38,3 +40,4 @@
     </table>
 </body>
 </html>
+{% endblock content %}

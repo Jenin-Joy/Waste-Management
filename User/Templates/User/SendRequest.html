@@ -1,65 +1,126 @@
+{% extends 'User/Head.html' %}
+{% block content %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Send Request</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            padding: 20px;
+        }
+        .form-container, .table-container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
+            margin-bottom: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        td, th {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+        select, textarea, input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        input[type="submit"] {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: 0.3s;
+        }
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+        th {
+            background-color: #007BFF;
+            color: white;
+        }
+    </style>
 </head>
 <body>
-    <form action="" method="post">
-        {% csrf_token %}
-        <table>
+    <div class="form-container" style="margin-top: 130px;">
+        <h2>Send Request</h2>
+        <form action="" method="post">
+            {% csrf_token %}
+            <table>
+                <tr>
+                    <td>Category</td>
+                    <td>
+                        <select name="sel_category">
+                            <option value="">...Select...</option>
+                            {% for i in category %}
+                            <option value="{{i.id}}">{{i.category_name}}</option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Content</td>
+                    <td><textarea name="txt_content" rows="5"></textarea></td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="center"><input type="submit" value="Send"></td>
+                </tr>
+            </table>
+        </form>
+    </div>
+    <div class="table-container">
+        <h2>Request History</h2>
+        <table cellpadding="10">
             <tr>
-                <td>Category</td>
+                <th>#</th>
+                <th>Content</th>
+                <th>Date</th>
+                <th>Category</th>
+                <th>Status</th>
+            </tr>
+            {% for i in request %}
+            <tr>
+                <td>{{forloop.counter}}</td>
+                <td>{{i.request_content}}</td>
+                <td>{{i.request_date}}</td>
+                <td>{{i.category.category_name}}</td>
                 <td>
-                    <select name="sel_category" id="">
-                        <option value="">...Select...</option>
-                        {% for i in category %}
-                        <option value="{{i.id}}">{{i.category_name}}</option>
-                        {% endfor %}
-                    </select>
+                    {% if i.request_status == 1 %}
+                    Request Accepted
+                    {% elif i.request_status == 2 %}
+                    Waste Collected
+                    {% else %}
+                    Request Pending
+                    {% endif %}
                 </td>
             </tr>
-            <tr>
-                <td>Content</td>
-                <td><textarea name="txt_content" id="" cols="20" rows="5"></textarea></td>
-            </tr>
-            <tr>
-                <td><input type="submit" value="Send"></td>
-            </tr>
+            {% endfor %}
         </table>
-    </form>
-    <table cellpadding="10">
-        <tr>
-            <td>#</td>
-            <td>Content</td>
-            <td>Date</td>
-            <td>Category</td>
-            <td>Status</td>
-        </tr>
-        {% for i in request %}
-        <tr>
-            <td>{{forloop.counter}}</td>
-            <td>{{i.request_content}}</td>
-            <td>{{i.request_date}}</td>
-            <td>{{i.category.category_name}}</td>
-            <td>
-                {% if i.request_status == 1 %}
-                Request Accepted
-                {% elif i.request_status == 2 %}
-                Waste Collected
-                {% else %}
-                Request Pending
-                {% endif %}
-            </td>
-        </tr>
-        {% endfor %}
-    </table>
+    </div>
     {% if msg %}
     <script>
-        alert("{{msg}}")
-        window.location = "{% url 'User:sendrequest' %}"
+        alert("{{msg}}");
+        window.location = "{% url 'User:sendrequest' %}";
     </script>
     {% endif %}
 </body>
 </html>
+{% endblock content %}

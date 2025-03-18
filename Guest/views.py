@@ -14,7 +14,7 @@ def user(request):
                                 user_house_number=request.POST.get("txt_hno"),
                                 user_photo=request.FILES.get("txt_photo"),
                                 ward=tbl_ward.objects.get(id=request.POST.get("sel_ward")))
-        return redirect("Guest:login")
+        return render(request, 'Guest/UserReg.html',{"msg":"You Registred Sucessfully"})
     else:
         return render(request, 'Guest/UserReg.html',{"ward":ward})
 
@@ -41,3 +41,6 @@ def login(request):
             return render(request, 'Guest/Login.html', {"error": "Invalid Email or Password"})
     else:
         return render(request, 'Guest/Login.html')
+
+def index(request):
+    return render(request,"Guest/index.html")

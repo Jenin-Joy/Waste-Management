@@ -4,6 +4,7 @@ from Guest import views
 app_name = "Guest"
 
 urlpatterns = [
-    path('',views.login,name="login"),
+    path('login/',views.login,name="login"),
     path('user/',views.user,name="user"),
+    path('',views.index,name="index"),
 ]

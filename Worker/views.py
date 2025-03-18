@@ -4,14 +4,20 @@ from User.models import *
 # Create your views here.
 
 def homepage(request):
+    if 'wid' not in request.session:
+        return redirect('Guest:login')
     worker = tbl_worker.objects.get(id=request.session["wid"])
     return render(request,"Worker/HomePage.html",{"worker":worker})
 
 def profile(request):
+    if 'wid' not in request.session:
+        return redirect('Guest:login')
     worker = tbl_worker.objects.get(id=request.session["wid"])
     return render(request,"Worker/MyProfile.html",{"worker":worker})
 
 def editprofile(request):
+    if 'wid' not in request.session:
+        return redirect('Guest:login')
     worker = tbl_worker.objects.get(id=request.session["wid"])
     if request.method == "POST":
         worker.worker_name = request.POST["txt_name"]
@@ -23,6 +29,8 @@ def editprofile(request):
         return render(request,"Worker/EditProfile.html",{"worker":worker})
 
 def changepassword(request):
+    if 'wid' not in request.session:
+        return redirect('Guest:login')
     worker = tbl_worker.objects.get(id=request.session["wid"])
     if request.method == "POST":
         old_password = request.POST["txt_old"]
@@ -41,6 +49,8 @@ def changepassword(request):
         return render(request,"Worker/ChangePassword.html")
 
 def viewrequest(request):
+    if 'wid' not in request.session:
+        return redirect('Guest:login')
     worker = tbl_worker.objects.get(id=request.session["wid"])
     req = tbl_request.objects.filter(request_status=1,user__ward=worker.ward.id)
     return render(request,"Worker/ViewRequest.html",{"request":req})
@@ -52,12 +62,20 @@ def collectrequest(request, id):
     return render(request,"Worker/ViewRequest.html",{"msg":"Waste Collected"})
 
 def collectedwaste(request):
+    if 'wid' not in request.session:
+        return redirect('Guest:login')
     worker = tbl_worker.objects.get(id=request.session["wid"])
     req = tbl_request.objects.filter(request_status=2,user__ward=worker.ward.id)
     return render(request,"Worker/CollectedWaste.html",{"request":req})
 
 def viewschedule(request):
+    if 'wid' not in request.session:
+        return redirect('Guest:login')
     day = tbl_day.objects.all()
     for i in day:
         i.wards = tbl_schedule.objects.filter(day=i.id)
     return render(request,"Worker/ViewSchedule.html",{"day":day})
+
+def logout(request):
+    del request.session["wid"]
+    return redirect("Guest:login")

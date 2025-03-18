@@ -6,14 +6,20 @@ from datetime import date
 # Create your views here.
 
 def homepage(request):
+    if 'uid' not in request.session:
+        return redirect('Guest:login')
     user = tbl_user.objects.get(id=request.session["uid"])
     return render(request,"User/HomePage.html",{"user":user})
 
 def profile(request):
+    if 'uid' not in request.session:
+        return redirect('Guest:login')
     user = tbl_user.objects.get(id=request.session["uid"])
     return render(request,"User/MyProfile.html",{"user":user})
 
 def editprofile(request):
+    if 'uid' not in request.session:
+        return redirect('Guest:login')
     user = tbl_user.objects.get(id=request.session["uid"])
     if request.method == "POST":
         user.user_name = request.POST["txt_name"]
@@ -26,6 +32,8 @@ def editprofile(request):
         return render(request,"User/EditProfile.html",{"user":user})
 
 def changepassword(request):
+    if 'uid' not in request.session:
+        return redirect('Guest:login')
     user = tbl_user.objects.get(id=request.session["uid"])
     if request.method == "POST":
         old_password = request.POST["txt_old"]
@@ -44,6 +52,8 @@ def changepassword(request):
         return render(request,"User/ChangePassword.html")
 
 def complaints(request):
+    if 'uid' not in request.session:
+        return redirect('Guest:login')
     complaint = tbl_complaint.objects.filter(user=request.session["uid"])
     if request.method == "POST":
         tbl_complaint.objects.create(complaint_title=request.POST.get("txt_title"),complaint_content=request.POST.get("txt_content"),user=tbl_user.objects.get(id=request.session["uid"]))
@@ -52,6 +62,8 @@ def complaints(request):
         return render(request,"User/Complaint.html",{"complaint":complaint})
 
 def feedback(request):
+    if 'uid' not in request.session:
+        return redirect('Guest:login')
     if request.method == "POST":
         tbl_feedback.objects.create(feedback_content=request.POST.get("txt_content"),user=tbl_user.objects.get(id=request.session["uid"]))
         return render(request,"User/Feedback.html",{"msg":"Feedback Send Sucessfully.."})
@@ -59,23 +71,31 @@ def feedback(request):
         return render(request,"User/Feedback.html")
 
 def payment(request):
-    if request.method == "POST":
-        count = tbl_payment.objects.filter(user=request.session["uid"],payment_date__month=date.today().month).count()
-        if count > 0:
-            return render(request,"User/Payment.html",{"msg":"Payment Already Done.."})
-        else:
+    if 'uid' not in request.session:
+        return redirect('Guest:login')
+    count = tbl_payment.objects.filter(user=request.session["uid"],payment_date__month=date.today().month).count()
+    if count > 0:
+        return render(request,"User/Payment.html",{"msg":"Payment Already Done.."})
+    else:
+        if request.method == "POST":
             tbl_payment.objects.create(user=tbl_user.objects.get(id=request.session["uid"]))
             return redirect("User:loader")
-    else:
-        return render(request,"User/Payment.html")
+        else:
+            return render(request,"User/Payment.html")
 
 def loader(request):
+    if 'uid' not in request.session:
+        return redirect('Guest:login')
     return render(request,"User/Loader.html")
 
 def paymentsuc(request):
+    if 'uid' not in request.session:
+        return redirect('Guest:login')
     return render(request,"User/Paymentsuc.html")
 
 def sendrequest(request):
+    if 'uid' not in request.session:
+        return redirect('Guest:login')
     category = tbl_category.objects.all()
     userrequest  = tbl_request.objects.filter(user=request.session["uid"])
     if request.method == "POST":
@@ -85,7 +105,13 @@ def sendrequest(request):
         return render(request,"User/SendRequest.html",{"category":category,"request":userrequest})
 
 def viewschedule(request):
+    if 'uid' not in request.session:
+        return redirect('Guest:login')
     day = tbl_day.objects.all()
     for i in day:
         i.wards = tbl_schedule.objects.filter(day=i.id)
     return render(request,"User/ViewSchedule.html",{"day":day})
+
+def logout(request):
+    del request.session["uid"]
+    return redirect("Guest:login")

@@ -15,4 +15,5 @@ urlpatterns = [
     path("collectedwaste/",views.collectedwaste,name="collectedwaste"),
 
     path('viewschedule/',views.viewschedule, name='viewschedule'),
+    path('logout/',views.logout, name='logout'),
 ]

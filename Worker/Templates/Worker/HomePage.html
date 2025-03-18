@@ -1,15 +1,27 @@
+{% extends 'Worker/Head.html' %}
+{% load static %}
+{% block content %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HomePage</title>
+    <title>Document</title>
 </head>
 <body>
-    <a href="{% url 'Worker:profile' %}">My profile</a><br>
-    <a href="{% url 'Worker:viewrequest' %}">View Request</a><br>
-    <a href="{% url 'Worker:collectedwaste' %}">Collected Waste</a><br>
-    <a href="{% url 'Worker:viewschedule' %}">View Schedule</a><br>
+    <section id="hero" class="hero section dark-background">
 
+        <img src="{% static 'Main/assets/img/hero-bg.jpg' %}" alt="" data-aos="fade-in">
+  
+        <div class="container d-flex flex-column align-items-center text-center">
+          <h2 data-aos="fade-up" data-aos-delay="100">Welcome to Our Website</h2>
+          <p data-aos="fade-up" data-aos-delay="200">We are team of talented designers making websites with Bootstrap</p>
+          <div data-aos="fade-up" data-aos-delay="300">
+            <!-- <a href="https://www.youtube.com/watch?v=Y7f98aduVJ8" class="glightbox pulsating-play-btn"></a> -->
+          </div>
+        </div>
+  
+      </section><!-- /Hero Section -->
 </body>
 </html>
+{% endblock content %}

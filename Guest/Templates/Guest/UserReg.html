@@ -1,57 +1,90 @@
+{% extends 'Guest/Head.html' %}
+
+{% block content %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Registration</title>
+    <!-- Link to Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .custom-margin-top {
+            margin-top: 100px; 
+        }
+    </style>
+    
 </head>
-<body>
-    <form action="" method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        <table>
-            <tr>
-                <td>Name</td>
-                <td><input type="text" name="txt_name" id=""></td>
-            </tr>
-            <tr>
-                <td>Email</td>
-                <td><input type="email" name="txt_email" id=""></td>
-            </tr>
-            <tr>
-                <td>Contact</td>
-                <td><input type="text" name="txt_contact" id=""></td>
-            </tr>
-            <tr>
-                <td>Address</td>
-                <td><textarea name="txt_address" id="" cols="20" rows="5"></textarea></td>
-            </tr>
-            <tr>
-                <td>Ward</td>
-                <td>
-                    <select name="sel_ward" id="">
-                        <option value="">...Select...</option>
-                        {% for i in ward %}
-                        <option value="{{i.id}}">{{i.ward_name}}</option>
-                        {% endfor %}
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <td>Houser Number</td>
-                <td><input type="text" name="txt_hno" id=""></td>
-            </tr>
-            <tr>
-                <td>Photo</td>
-                <td><input type="file" name="txt_photo" id=""></td>
-            </tr>
-            <tr>
-                <td>Password</td>
-                <td><input type="password" name="txt_password" id=""></td>
-            </tr>
-            <tr>
-                <td><input type="submit" value="Register"></td>
-            </tr>
-        </table>
-    </form>
+<body class="bg-light">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card custom-margin-top">
+                    <div class="card-header text-white text-center">
+                        <h3>User Registration</h3>
+                    </div>
+                    <div class="card-body">
+                        <form action="" method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label for="txt_name">Name</label>
+                                <input type="text" name="txt_name" id="txt_name" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="txt_email">Email</label>
+                                <input type="email" name="txt_email" id="txt_email" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="txt_contact">Contact</label>
+                                <input type="text" name="txt_contact" id="txt_contact" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="txt_address">Address</label>
+                                <textarea name="txt_address" id="txt_address" class="form-control" rows="5" required></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="sel_ward">Ward</label>
+                                <select name="sel_ward" id="sel_ward" class="form-control" required>
+                                    <option value="">...Select...</option>
+                                    {% for i in ward %}
+                                    <option value="{{i.id}}">{{i.ward_name}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="txt_hno">House Number</label>
+                                <input type="text" name="txt_hno" id="txt_hno" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="txt_photo">Photo</label>
+                                <input type="file" name="txt_photo" id="txt_photo" class="form-control-file" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="txt_password">Password</label>
+                                <input type="password" name="txt_password" id="txt_password" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary btn-block">Register</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% if msg %}
+    <script>
+        alert("{{ msg }}");
+        window.location = "{% url 'Guest:login' %}"
+    </script>
+    {% endif %}
+
+    <!-- Link to Bootstrap JS (optional for additional functionality like dropdowns, modals) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
+{% endblock content %}

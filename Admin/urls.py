@@ -34,8 +34,12 @@ urlpatterns = [
 
     path("viewrequest/",views.viewrequest,name="viewrequest"),
     path("acceptrequest/<int:id>",views.acceptrequest,name="acceptrequest"),
+    path("collectedwaste/",views.collectedwaste,name="collectedwaste"),
 
     path("schedule/",views.schedule,name="schedule"),
     path("deleteschedule/<int:id>",views.deleteschedule,name="deleteschedule"),
+
+    path("logout/",views.logout,name="logout"),
+
 
 ]

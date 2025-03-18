@@ -1,3 +1,5 @@
+{% extends 'Admin/Head.html' %}
+{% block content %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,13 +8,15 @@
     <title>Schedule</title>
 </head>
 <body>
+    <div class="col-sm-12 col-xl-6">
+        <div class="bg-light rounded h-100 p-4">
     <form action="" method="post">
         {% csrf_token %}
-        <table>
+        <table class="table">
             <tr>
                 <td>Day</td>
                 <td>
-                    <select name="sel_day" id="">
+                    <select name="sel_day" id="" class="form-control">
                         <option value="">...Select...</option>
                         {% for i in day %}
                         <option value="{{i.id}}">{{i.day_name}}</option>
@@ -23,7 +27,7 @@
             <tr>
                 <td>Ward</td>
                 <td>
-                    <select name="sel_ward" id="">
+                    <select name="sel_ward" id="" class="form-control">
                         <option value="">...Select...</option>
                         {% for i in ward %}
                         <option value="{{i.id}}">{{i.ward_name}}</option>
@@ -32,10 +36,11 @@
                 </td>
             </tr>
             <tr>
-                <td><input type="submit" value="Add"></td>
+                <td colspan="2" align="center"><input type="submit" class="btn btn-primary" value="Add"></td>
             </tr>
         </table>
     </form>
+    </div></div>
     <!-- <table>
         <tr>
             <td>#</td>
@@ -65,3 +70,4 @@
     {% endfor %}
 </body>
 </html>
+{% endblock content %}

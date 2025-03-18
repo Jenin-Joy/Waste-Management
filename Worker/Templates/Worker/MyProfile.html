@@ -1,34 +1,82 @@
+{% extends 'Worker/Head.html' %}
+{% block content %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Worker Profile</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 100vh;
+            margin: 0;
+        }
+        .profile-container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 50%;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+        .actions {
+            text-align: center;
+        }
+        .actions a {
+            text-decoration: none;
+            padding: 8px 15px;
+            background-color: #007bff;
+            color: white;
+            border-radius: 5px;
+            margin: 5px;
+            display: inline-block;
+        }
+        .actions a:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
 <body>
-    <table>
-        <tr>
-            <td>Name</td>
-            <td>{{worker.worker_name}}</td>
-        </tr>
-        <tr>
-            <td>Contact</td>
-            <td>{{worker.worker_contact}}</td>
-        </tr>
-        <tr>
-            <td>Email</td>
-            <td>{{worker.worker_email}}</td>
-        </tr>
-        <tr>
-            <td><a href="{% url 'Worker:editprofile' %}">Edit Profile</a></td>
-            <td><a href="{% url 'Worker:changepassword' %}">Change Password</a></td>
-        </tr>
-    </table>
+    <div class="profile-container">
+        <h2 style="text-align:center;">Worker Profile</h2>
+        <table>
+            <tr>
+                <td><strong>Name</strong></td>
+                <td>{{ worker.worker_name }}</td>
+            </tr>
+            <tr>
+                <td><strong>Contact</strong></td>
+                <td>{{ worker.worker_contact }}</td>
+            </tr>
+            <tr>
+                <td><strong>Email</strong></td>
+                <td>{{ worker.worker_email }}</td>
+            </tr>
+        </table>
+        <div class="actions">
+            <a href="{% url 'Worker:editprofile' %}">Edit Profile</a>
+            <a href="{% url 'Worker:changepassword' %}">Change Password</a>
+        </div>
+    </div>
     {% if msg %}
     <script>
         alert('{{ msg }}');
-        window.location = "{% url 'Worker:profile' %}"
+        window.location = "{% url 'Worker:profile' %}";
     </script>
     {% endif %}
 </body>
 </html>
+{% endblock content %}

@@ -5,9 +5,13 @@ from Guest.models import *
 # Create your views here.
 
 def homepage(request):
+    if 'aid' not in request.session:
+        return redirect('Guest:login')
     return render(request,"Admin/HomePage.html")
 
 def worker(request):
+    if 'aid' not in request.session:
+        return redirect('Guest:login')
     worker = tbl_worker.objects.all()
     ward = tbl_ward.objects.all()
     if request.method == 'POST':
@@ -21,6 +25,8 @@ def deleteworker(request, id):
     return redirect('Admin:worker')
 
 def admin(request):
+    if 'aid' not in request.session:
+        return redirect('Guest:login')
     admin = tbl_admin.objects.all()
     if request.method == 'POST':
         tbl_admin.objects.create(admin_name=request.POST.get('txt_name'),admin_email=request.POST.get('txt_email'),admin_password=request.POST.get('txt_password'))
@@ -44,6 +50,8 @@ def editadmin(request, id):
         return render(request, 'Admin/AdminReg.html', {'editadmin': admin})
 
 def category(request):
+    if 'aid' not in request.session:
+        return redirect('Guest:login')
     category = tbl_category.objects.all()
     if request.method == 'POST':
         tbl_category.objects.create(category_name=request.POST.get('txt_name'))
@@ -65,6 +73,8 @@ def editcategory(request, id):
         return render(request, 'Admin/Category.html', {'editcategory': category})
 
 def day(request):
+    if 'aid' not in request.session:
+        return redirect('Guest:login')
     day = tbl_day.objects.all()
     if request.method == 'POST':
         tbl_day.objects.create(day_name=request.POST.get('txt_name'))
@@ -86,6 +96,8 @@ def editday(request, id):
         return render(request, 'Admin/Day.html', {'editday': day})
 
 def ward(request):
+    if 'aid' not in request.session:
+        return redirect('Guest:login')
     ward = tbl_ward.objects.all()
     if request.method == 'POST':
         tbl_ward.objects.create(ward_name=request.POST.get('txt_name'))
@@ -107,10 +119,14 @@ def editward(request, id):
         return render(request, 'Admin/Ward.html', {'editward': ward})
 
 def viewcomplaint(request):
+    if 'aid' not in request.session:
+        return redirect('Guest:login')
     complaint = tbl_complaint.objects.filter(complaint_status=0)
     return render(request,"Admin/ViewComplaint.html",{"complaint":complaint})
 
 def reply(request, id):
+    if 'aid' not in request.session:
+        return redirect('Guest:login')
     if request.method == "POST":
         complaint = tbl_complaint.objects.get(id=id)
         complaint.complaint_status = 1
@@ -121,19 +137,27 @@ def reply(request, id):
         return render(request,"Admin/Reply.html")
 
 def replyedcomplaint(request):
+    if 'aid' not in request.session:
+        return redirect('Guest:login')
     complaint = tbl_complaint.objects.filter(complaint_status=1)
     return render(request,"Admin/ReplyedComplaint.html",{"complaint":complaint})
 
 def viewuser(request):
+    if 'aid' not in request.session:
+        return redirect('Guest:login')
     user = tbl_user.objects.all()
     return render(request,"Admin/ViewUser.html",{"user":user})
 
 def viewfeedback(request):
+    if 'aid' not in request.session:
+        return redirect('Guest:login')
     feedback = tbl_feedback.objects.all()
     return render(request,"Admin/ViewFeedback.html",{"feedback":feedback})
 
 def viewrequest(request):
-    req = tbl_request.objects.all()
+    if 'aid' not in request.session:
+        return redirect('Guest:login')
+    req = tbl_request.objects.filter(request_status__lt=2)
     return render(request,"Admin/ViewRequest.html",{"request":req})
 
 def acceptrequest(request, id):
@@ -143,6 +167,8 @@ def acceptrequest(request, id):
     return redirect("Admin:viewrequest")
 
 def schedule(request):
+    if 'aid' not in request.session:
+        return redirect('Guest:login')
     schedule = tbl_schedule.objects.all()
     ward = tbl_ward.objects.all()
     day = tbl_day.objects.all()
@@ -157,3 +183,13 @@ def schedule(request):
 def deleteschedule(request, id):
     tbl_schedule.objects.get(id=id).delete()
     return redirect('Admin:schedule')
+
+def collectedwaste(request):
+    if 'aid' not in request.session:
+        return redirect('Guest:login')
+    waste = tbl_request.objects.filter(request_status=2)
+    return render(request,"Admin/CollectedWaste.html",{"waste":waste})
+
+def logout(request):
+    del request.session["aid"]
+    return redirect("Guest:login")

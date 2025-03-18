@@ -20,4 +20,7 @@ urlpatterns = [
     path('sendrequest/',views.sendrequest, name='sendrequest'),
     path('viewschedule/',views.viewschedule, name='viewschedule'),
 
+    path('logout/',views.logout, name='logout'),
+
+
 ]
